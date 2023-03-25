@@ -14,8 +14,8 @@ object MemberListRepositoryImpl:MemberListRepository{
 
 
     init {
-        for (i in 0 until 7){
-            val item = Member("Участник", mutableListOf<Int>())
+        for (i in 1 until 8 ){
+            val item = Member("Member$i", mutableListOf<Int>())
             addMember(item)
         }
     }
@@ -27,7 +27,6 @@ object MemberListRepositoryImpl:MemberListRepository{
         }
         memberList.add(member)
         updateList()
-    //todo updateList() fun
     }
 
     override fun getMemberList(): LiveData<List<Member>> {
