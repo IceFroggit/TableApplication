@@ -31,7 +31,7 @@
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
-            <TextView
+            <EditText
                 android:id="@+id/grade_1"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
