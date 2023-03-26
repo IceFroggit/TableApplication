@@ -39,9 +39,9 @@ class MainViewModel : ViewModel() {
         if (validateInput(point)){
             _memberItemLD.value?.let{
                 //todo продумать как передавать иноформацию и менять значения списка баллов
-                val item = it.copy()
+                //val item = it.copy()
                 ///////////////////
-                editMemberUseCase.editMember(item)
+               // editMemberUseCase.editMember(item)
 
             }
         }

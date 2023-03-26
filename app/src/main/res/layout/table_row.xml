@@ -32,16 +32,19 @@
                 android:text="1"
                 android:textAlignment="center" />
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_1"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="1"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_2"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -49,10 +52,12 @@
                 android:layout_column="2"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center"/>
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_3"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -60,10 +65,12 @@
                 android:layout_column="3"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_4"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -71,10 +78,12 @@
                 android:layout_column="4"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_5"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -82,10 +91,12 @@
                 android:layout_column="5"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_6"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -93,10 +104,12 @@
                 android:layout_column="6"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
             <EditText
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_7"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -104,10 +117,12 @@
                 android:layout_column="7"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/white"
                 android:text="1"
                 android:textAlignment="center" />
             <TextView
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/sum_of_points"
                 android:enabled="true"
                 style="@style/table_row_item"
@@ -119,6 +134,7 @@
                 android:text="Sum"
                 android:textAlignment="center" />
             <TextView
+                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/place"
                 android:enabled="true"
                 style="@style/table_row_item"
