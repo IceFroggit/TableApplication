@@ -31,19 +31,18 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
             field = value//todo notifyDataSetChanged bad practise
             notifyDataSetChanged()
         }
-
-    var ExpAmtArray = ArrayList<String>()
-    var ExpenseFinalTotal = 0
-    var textviewTotalExpense: TextView? = null
-
-    var sum = 0
-    var listOfCorrectEditText = arrayListOf<Int>()
+    var listOfCorrectPoint1 = arrayListOf<Boolean>()
+    var listOfCorrectPoint2 = arrayListOf<Boolean>()
+    var listOfCorrectPoint3 = arrayListOf<Boolean>()
+    var listOfCorrectPoint4 = arrayListOf<Boolean>()
+    var listOfCorrectPoint5 = arrayListOf<Boolean>()
+    var listOfCorrectPoint6 = arrayListOf<Boolean>()
+    var listOfCorrectPoint7 = arrayListOf<Boolean>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.table_row, parent, false)
         val viewHolder = MemberViewHolder(view)
-        listOfCorrectEditText.add(0)
-        setListeners(viewHolder)
+        // setListeners(viewHolder)
         return viewHolder
     }
 
@@ -51,6 +50,7 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         val item = memberList[position]
         holder.tvName.text = item.name
         holder.tvMemberId.text = item.id.toString()
+        setListeners(holder, position)
         //todo может придумаю лучшую реализацию
         when (item.id) {
             0 -> holder.etGrade1.isEnabled = false
@@ -90,82 +90,66 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
 
     }
 
-    fun setListeners(holder: MemberViewHolder) {
+    fun setListeners(holder: MemberViewHolder, position: Int) {
+        var list = when (position) {
+            0 -> listOfCorrectPoint1
+            1 -> listOfCorrectPoint2
+            2 -> listOfCorrectPoint3
+            3 -> listOfCorrectPoint4
+            4 -> listOfCorrectPoint5
+            5 -> listOfCorrectPoint6
+            6 -> listOfCorrectPoint7
+            else -> throw RuntimeException("Wrong postition")
+        }
         holder.etGrade1.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list, holder))
         holder.etGrade2.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list,
+            holder))
         holder.etGrade3.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list,
+            holder))
         holder.etGrade4.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list,
+            holder))
         holder.etGrade5.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list,
+            holder))
         holder.etGrade6.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list,
+            holder))
         holder.etGrade7.addTextChangedListener(customTextWatcher(holder.etGrade1,
-            holder.sumPoint,
-            holder.place,
-            listOfCorrectEditText,
-            sum, holder))
+            list,
+            holder))
 
     }
 
     class customTextWatcher(
-        private val view: EditText,
-        private val sumPoints: TextView,
-        private val place: TextView,
-        private var listOfCorrectPoints: ArrayList<Int>,
-        private var sum: Int,
+        private val currentEditText: EditText,
+        private var listOfCorrectPoints: ArrayList<Boolean>,
         private val holder: MemberViewHolder,
     ) : TextWatcher {
         var isOnTextChangedCorrect = false
+        var previousPointCorrect = false
         var pointInt = -1
         private var count = 0
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            if (p0.isNullOrEmpty() || p0.isNullOrBlank()) {
+                previousPointCorrect = false
+            } else
+                previousPointCorrect = true
+        }
+
         override fun afterTextChanged(p0: Editable?) {
-            view.isEnabled = true
+            currentEditText.isEnabled = true
             if (isOnTextChangedCorrect) {
-                var oldSum = try {
-                    sumPoints.text.toString().trim().toInt()
-                } catch (e: Exception) {
-                    0
-                }
-                listOfCorrectPoints[0]++
-                //sumPoints.text = (oldSum + pointInt).toString()
-                /*when (view.id) {
-                    R.id.grade_1 -> listOfCorrectPoints.add(0, true)
-                    R.id.grade_2 -> listOfCorrectPoints.add(1, true)
-                    R.id.grade_3 -> listOfCorrectPoints.add(2, true)
-                    R.id.grade_4 -> listOfCorrectPoints.add(3, true)
-                    R.id.grade_5 -> listOfCorrectPoints.add(4, true)
-                    R.id.grade_6 -> listOfCorrectPoints.add(5, true)
-                    R.id.grade_7 -> listOfCorrectPoints.add(6, true)
-                }*/
+                if (!previousPointCorrect)
+                    listOfCorrectPoints.add(true)
                 //todo add constant
                 //if (listOfCorrectPoints.size >= 6)
-                if (listOfCorrectPoints[0] == 6) {
-                    sumPoints.setTextColor(Color.BLACK)
-                    sumPoints.text = ""
-
+                if (listOfCorrectPoints.size == 6) {
+                    holder.sumPoint.setTextColor(Color.BLACK)
                     val gr1 =
                         if (holder.etGrade1.text.toString() != "") holder.etGrade1.text.toString()
                             .toInt() else 0
@@ -188,50 +172,49 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
                         if (holder.etGrade7.text.toString() != "") holder.etGrade7.text.toString()
                             .toInt() else 0
 
-                    sumPoints.text = (gr1 + gr2 + gr3 + gr4 + gr5 + gr6 + gr7).toString()
-
-
+                    holder.sumPoint.text = (gr1 + gr2 + gr3 + gr4 + gr5 + gr6 + gr7).toString()
                 }
-
             } else {
-                listOfCorrectPoints[0]--
+                holder.sumPoint.text = ""
+                if (!previousPointCorrect && listOfCorrectPoints.size != 0)
+                    listOfCorrectPoints.removeAt(0)
+
             }
         }
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            if (!p0.isNullOrBlank()) {
-                pointInt = try {
-                    p0.toString().trim().toInt()
+            if (!p0.isNullOrBlank() || !p0.isNullOrEmpty()) {
+                try {
+                    pointInt = p0.toString().trim().toInt()
                 } catch (e: Exception) {
-                    -100
+                    pointInt = -100
+                    isOnTextChangedCorrect = false
                 }
-               /* if (pointInt == -100) {
-                    when (view.id) {
-                        R.id.grade_1 -> listOfCorrectPoints.removeAt(0)
-                        R.id.grade_2 -> listOfCorrectPoints.removeAt(1)
-                        R.id.grade_3 -> listOfCorrectPoints.removeAt(2)
-                        R.id.grade_4 -> listOfCorrectPoints.removeAt(3)
-                        R.id.grade_5 -> listOfCorrectPoints.removeAt(4)
-                        R.id.grade_6 -> listOfCorrectPoints.removeAt(5)
-                        R.id.grade_7 -> listOfCorrectPoints.removeAt(6)
-                    }
-                }*/
                 //todo константы здесь определить возможно стоит
-                if (pointInt > MainViewModel.MAX_POINT || pointInt < MainViewModel.MIN_POINT) {
-                    view.error = "invalid input"
-                    view.isEnabled = false
-                    Toast.makeText(view.getContext(),
+                if (pointInt > MAX_POINT || pointInt < MIN_POINT) {
+                    currentEditText.error = "invalid input"
+                    //  currentEditText.isEnabled = false
+                    Toast.makeText(currentEditText.getContext(),
                         "Enter only number 0-5",
                         Toast.LENGTH_SHORT).show();
+                    isOnTextChangedCorrect = false
                 } else {
-                    view.error = null
+                    // currentEditText.error = null
                     isOnTextChangedCorrect = true
                 }
+            } else {
 
             }
-
-
+            if (p0.toString() == "" && listOfCorrectPoints.size != 0)
+                listOfCorrectPoints.removeAt(0)
+            if (listOfCorrectPoints.size != 6)
+                holder.sumPoint.text = ""
         }
+    }
+
+    companion object {
+        const val MAX_POINT = 5
+        const val MIN_POINT = 0
     }
 
 }
