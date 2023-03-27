@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.mMemberList.observe(this){
             memberAdapter.memberList = it
         }
-        viewModel.errorInputPoint.observe(this){
+        memberAdapter.errorInput.observe(this){
             val message = if (it) {
                 "invalid point only 0-5"
             } else {

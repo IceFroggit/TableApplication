@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <!--Todo add string constans -->
     <TableLayout
         android:id="@+id/table_heading_layout"
         android:layout_width="match_parent"
@@ -41,7 +41,6 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center" />
             <EditText
                 android:imeOptions="flagNoFullscreen"
@@ -54,7 +53,6 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center"/>
             <EditText
                 android:imeOptions="flagNoFullscreen"
@@ -67,7 +65,6 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center" />
             <EditText
                 android:imeOptions="flagNoFullscreen"
@@ -80,7 +77,6 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center" />
             <EditText
                 android:imeOptions="flagNoFullscreen"
@@ -93,7 +89,6 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center" />
             <EditText
                 android:imeOptions="flagNoFullscreen"
@@ -106,7 +101,6 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center" />
             <EditText
                 android:imeOptions="flagNoFullscreen"
@@ -119,31 +113,28 @@
                 android:layout_weight="1"
                 android:inputType="number"
                 android:background="@color/white"
-                android:text="1"
                 android:textAlignment="center" />
             <TextView
                 android:imeOptions="flagNoFullscreen"
                 android:id="@+id/sum_of_points"
-                android:enabled="true"
+                android:textColor="@color/white"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="8"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="Sum"
                 android:textAlignment="center" />
             <TextView
                 android:imeOptions="flagNoFullscreen"
                 android:id="@+id/place"
-                android:enabled="true"
+                android:textColor="@color/white"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="9"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="Place"
                 android:textAlignment="center" />
         </TableRow>
     </TableLayout>

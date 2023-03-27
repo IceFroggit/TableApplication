@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow>
+            <!--Todo add string constans -->
 
             <TextView
                 style="@style/table_header"
@@ -142,9 +143,9 @@
         </TableRow>
     </TableLayout>
 
-    <!-- Нужно, чтобы элементы все могли скроллиться
-        clipToPadding="false"
-        android:paddingBottom= -->
+        <!-- Нужно, чтобы элементы все могли скроллиться
+            clipToPadding="false"
+            android:paddingBottom= -->
     <androidx.recyclerview.widget.RecyclerView
         android:clipToPadding="false"
         android:paddingBottom="60dp"

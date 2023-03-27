@@ -56,7 +56,7 @@ class MainViewModel : ViewModel() {
 
     private fun validateInput(point: Int): Boolean {
         var result = true
-        if (point < MIN_MEMBER_CNT || point > MAX_MEMBER_CNT) {
+        if (point < MIN_POINT || point > MAX_POINT) {
             _errorInputPoint.value = true
             result = false
         }
@@ -77,8 +77,8 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        const val MIN_MEMBER_CNT = 0
-        const val MAX_MEMBER_CNT = 7
+        const val MIN_POINT = 0
+        const val MAX_POINT = 5
     }
 
 
