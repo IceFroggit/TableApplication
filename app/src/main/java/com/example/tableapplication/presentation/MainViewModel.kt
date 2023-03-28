@@ -48,11 +48,12 @@ class MainViewModel : ViewModel() {
         var placeInd = 1
         val memberList = mutableListOf<Member>()
         data.forEach {
-            var sum = it[7]
-            var id = it[8]
+            var sum = it[6]
+            var id = it[7]
             var place = placeInd++
-            it.removeAt(7)
-            it.removeAt(7)
+            it.removeAt(6)
+            it.removeAt(6)
+            it.add(id, 0)
             var oldItem = getMemberUseCase.getMember(id)
             var item = oldItem.copy(pointList = (it.toList()), place = place, pointSum = sum)
             memberList.add(item)
@@ -69,7 +70,7 @@ class MainViewModel : ViewModel() {
             it.add(sum)
             it.add(id++)
         }
-        editMemberItems(list.sortedWith(compareBy({ -it[7] })))
+        editMemberItems(list.sortedWith(compareBy({ -it[6] })))
     }
     companion object {
         const val MIN_POINT = 0
