@@ -148,7 +148,7 @@
             android:paddingBottom= -->
     <androidx.recyclerview.widget.RecyclerView
         android:clipToPadding="false"
-        android:paddingBottom="60dp"
+        android:paddingBottom="80dp"
         android:id="@+id/table_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

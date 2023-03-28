@@ -4,6 +4,7 @@ package com.example.tableapplication.presentation
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,6 @@ import com.example.tableapplication.domain.Member
 class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     //todo delete later
     var addTextChangedListener: ((EditText) -> Unit)? = null
-
     //todo может лучшее сделать решение
     val _errorInput = MutableLiveData<Boolean>()
     val errorInput: LiveData<Boolean>
@@ -103,22 +103,22 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         }
         holder.etGrade1.addTextChangedListener(customTextWatcher(holder.etGrade1,
             list, holder))
-        holder.etGrade2.addTextChangedListener(customTextWatcher(holder.etGrade1,
+        holder.etGrade2.addTextChangedListener(customTextWatcher(holder.etGrade2,
             list,
             holder))
-        holder.etGrade3.addTextChangedListener(customTextWatcher(holder.etGrade1,
+        holder.etGrade3.addTextChangedListener(customTextWatcher(holder.etGrade3,
             list,
             holder))
-        holder.etGrade4.addTextChangedListener(customTextWatcher(holder.etGrade1,
+        holder.etGrade4.addTextChangedListener(customTextWatcher(holder.etGrade4,
             list,
             holder))
-        holder.etGrade5.addTextChangedListener(customTextWatcher(holder.etGrade1,
+        holder.etGrade5.addTextChangedListener(customTextWatcher(holder.etGrade5,
             list,
             holder))
-        holder.etGrade6.addTextChangedListener(customTextWatcher(holder.etGrade1,
+        holder.etGrade6.addTextChangedListener(customTextWatcher(holder.etGrade6,
             list,
             holder))
-        holder.etGrade7.addTextChangedListener(customTextWatcher(holder.etGrade1,
+        holder.etGrade7.addTextChangedListener(customTextWatcher(holder.etGrade7,
             list,
             holder))
 
@@ -127,7 +127,7 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     class customTextWatcher(
         private val currentEditText: EditText,
         private var listOfCorrectPoints: ArrayList<Boolean>,
-        private val holder: MemberViewHolder,
+        private val holder: MemberViewHolder
     ) : TextWatcher {
         var isOnTextChangedCorrect = false
         var previousPointCorrect = false
