@@ -4,45 +4,42 @@ package com.example.tableapplication.presentation
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tableapplication.R
 import com.example.tableapplication.domain.Member
 
 
 class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
-    //todo delete later
-    var addTextChangedListener: ((EditText) -> Unit)? = null
-    //todo может лучшее сделать решение
-    val _errorInput = MutableLiveData<Boolean>()
-    val errorInput: LiveData<Boolean>
-        get() = _errorInput
-
     var memberList = listOf<Member>()
         set(value) {
             field = value//todo notifyDataSetChanged bad practise
             notifyDataSetChanged()
         }
-    var listOfCorrectPoint1 = arrayListOf<Boolean>()
-    var listOfCorrectPoint2 = arrayListOf<Boolean>()
-    var listOfCorrectPoint3 = arrayListOf<Boolean>()
-    var listOfCorrectPoint4 = arrayListOf<Boolean>()
-    var listOfCorrectPoint5 = arrayListOf<Boolean>()
-    var listOfCorrectPoint6 = arrayListOf<Boolean>()
-    var listOfCorrectPoint7 = arrayListOf<Boolean>()
+    val listOfCorrectPoints = ArrayList<ArrayList<Int>>()
+    var listOfCorrectPoint1 = arrayListOf<Int>()
+    var listOfCorrectPoint2 = arrayListOf<Int>()
+    var listOfCorrectPoint3 = arrayListOf<Int>()
+    var listOfCorrectPoint4 = arrayListOf<Int>()
+    var listOfCorrectPoint5 = arrayListOf<Int>()
+    var listOfCorrectPoint6 = arrayListOf<Int>()
+    var listOfCorrectPoint7 = arrayListOf<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.table_row, parent, false)
         val viewHolder = MemberViewHolder(view)
-        // setListeners(viewHolder)
+        listOfCorrectPoints.add(0,ArrayList<Int>())
+        listOfCorrectPoints.add(1,ArrayList<Int>())
+        listOfCorrectPoints.add(2,ArrayList<Int>())
+        listOfCorrectPoints.add(3,ArrayList<Int>())
+        listOfCorrectPoints.add(4,ArrayList<Int>())
+        listOfCorrectPoints.add(5,ArrayList<Int>())
+        listOfCorrectPoints.add(6,ArrayList<Int>())
+        setListeners(viewHolder,listOfCorrectPoints)
         return viewHolder
     }
 
@@ -50,9 +47,8 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         val item = memberList[position]
         holder.tvName.text = item.name
         holder.tvMemberId.text = item.id.toString()
-        setListeners(holder, position)
-        //todo может придумаю лучшую реализацию
-        when (item.id) {
+        //setListeners(holder, position)
+        when (position) {
             0 -> holder.etGrade1.isEnabled = false
             1 -> holder.etGrade2.isEnabled = false
             2 -> holder.etGrade3.isEnabled = false
@@ -61,14 +57,11 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
             5 -> holder.etGrade6.isEnabled = false
             6 -> holder.etGrade7.isEnabled = false
         }
-        //addTextChangedListener?.invoke(holder.etGrade1)
-        // addTextChangedListener?.invoke(holder.etGrade2)
-        //// addTextChangedListener?.invoke(holder.etGrade3)
-        // addTextChangedListener?.invoke(holder.etGrade4)
-        // addTextChangedListener?.invoke(holder.etGrade5)
-        // addTextChangedListener?.invoke(holder.etGrade6)
-        // addTextChangedListener?.invoke(holder.etGrade7)
 
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position != 7) VIEW_TYPE_ITEM else VIEW_TYPE_TABLE_ENDING
     }
 
     override fun getItemCount(): Int {
@@ -76,6 +69,7 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     }
 
     class MemberViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+
         val tvName = view.findViewById<TextView>(R.id.member_name)
         val tvMemberId = view.findViewById<TextView>(R.id.member_id)
         var etGrade1 = view.findViewById<EditText>(R.id.grade_1)
@@ -87,20 +81,13 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         var etGrade7 = view.findViewById<EditText>(R.id.grade_7)
         var sumPoint = view.findViewById<TextView>(R.id.sum_of_points)
         var place = view.findViewById<TextView>(R.id.place)
+        //todo delete later
+        val id:Int
+            get() =  tvMemberId.text.toString().toInt()
 
     }
 
-    fun setListeners(holder: MemberViewHolder, position: Int) {
-        var list = when (position) {
-            0 -> listOfCorrectPoint1
-            1 -> listOfCorrectPoint2
-            2 -> listOfCorrectPoint3
-            3 -> listOfCorrectPoint4
-            4 -> listOfCorrectPoint5
-            5 -> listOfCorrectPoint6
-            6 -> listOfCorrectPoint7
-            else -> throw RuntimeException("Wrong postition")
-        }
+    fun setListeners(holder: MemberViewHolder, list: ArrayList<ArrayList<Int>>, ) {
         holder.etGrade1.addTextChangedListener(customTextWatcher(holder.etGrade1,
             list, holder))
         holder.etGrade2.addTextChangedListener(customTextWatcher(holder.etGrade2,
@@ -126,95 +113,110 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
 
     class customTextWatcher(
         private val currentEditText: EditText,
-        private var listOfCorrectPoints: ArrayList<Boolean>,
-        private val holder: MemberViewHolder
+        private var listOfCorrectPoints: ArrayList<ArrayList<Int>>,
+        private val holder: MemberViewHolder,
     ) : TextWatcher {
+        var isOnTextChanged = false
         var isOnTextChangedCorrect = false
         var previousPointCorrect = false
-        var pointInt = -1
         private var count = 0
 
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            if (p0.isNullOrEmpty() || p0.isNullOrBlank()) {
-                previousPointCorrect = false
-            } else
+            previousPointCorrect = false
+            if (checkValidation(p0)) {
                 previousPointCorrect = true
+            }
         }
 
         override fun afterTextChanged(p0: Editable?) {
             currentEditText.isEnabled = true
-            if (isOnTextChangedCorrect) {
-                if (!previousPointCorrect)
-                    listOfCorrectPoints.add(true)
-                //todo add constant
-                //if (listOfCorrectPoints.size >= 6)
-                if (listOfCorrectPoints.size == 6) {
-                    holder.sumPoint.setTextColor(Color.BLACK)
-                    val gr1 =
-                        if (holder.etGrade1.text.toString() != "") holder.etGrade1.text.toString()
-                            .toInt() else 0
-                    val gr2 =
-                        if (holder.etGrade2.text.toString() != "") holder.etGrade2.text.toString()
-                            .toInt() else 0
-                    val gr3 =
-                        if (holder.etGrade3.text.toString() != "") holder.etGrade3.text.toString()
-                            .toInt() else 0
-                    val gr4 =
-                        if (holder.etGrade4.text.toString() != "") holder.etGrade4.text.toString()
-                            .toInt() else 0
-                    val gr5 =
-                        if (holder.etGrade5.text.toString() != "") holder.etGrade5.text.toString()
-                            .toInt() else 0
-                    val gr6 =
-                        if (holder.etGrade6.text.toString() != "") holder.etGrade6.text.toString()
-                            .toInt() else 0
-                    val gr7 =
-                        if (holder.etGrade7.text.toString() != "") holder.etGrade7.text.toString()
-                            .toInt() else 0
+            if (isOnTextChanged) {
 
-                    holder.sumPoint.text = (gr1 + gr2 + gr3 + gr4 + gr5 + gr6 + gr7).toString()
+
+                if (p0.toString() != "") {
+                    if (isOnTextChangedCorrect) {
+                        if (!previousPointCorrect) {
+                            listOfCorrectPoints[holder.id].add(p0.toString().toInt())
+                            previousPointCorrect = true
+                        }
+
+                        //todo add constant
+                        if (listOfCorrectPoints[holder.id].size == 6) {
+                            holder.sumPoint.setTextColor(Color.BLACK)
+                            val gr1 =
+                                if (holder.etGrade1.text.toString() != "") holder.etGrade1.text.toString()
+                                    .toInt() else 0
+                            val gr2 =
+                                if (holder.etGrade2.text.toString() != "") holder.etGrade2.text.toString()
+                                    .toInt() else 0
+                            val gr3 =
+                                if (holder.etGrade3.text.toString() != "") holder.etGrade3.text.toString()
+                                    .toInt() else 0
+                            val gr4 =
+                                if (holder.etGrade4.text.toString() != "") holder.etGrade4.text.toString()
+                                    .toInt() else 0
+                            val gr5 =
+                                if (holder.etGrade5.text.toString() != "") holder.etGrade5.text.toString()
+                                    .toInt() else 0
+                            val gr6 =
+                                if (holder.etGrade6.text.toString() != "") holder.etGrade6.text.toString()
+                                    .toInt() else 0
+                            val gr7 =
+                                if (holder.etGrade7.text.toString() != "") holder.etGrade7.text.toString()
+                                    .toInt() else 0
+
+                            holder.sumPoint.text =
+                                (gr1 + gr2 + gr3 + gr4 + gr5 + gr6 + gr7).toString()
+                        } else {
+                            holder.sumPoint.text = ""
+                        }
+                    } else {
+                        if (previousPointCorrect && listOfCorrectPoints[holder.id].size != 0)
+                            listOfCorrectPoints[holder.id].removeAt(0)
+                    }//todo delete later
                 }
-            } else {
-                holder.sumPoint.text = ""
-                if (!previousPointCorrect && listOfCorrectPoints.size != 0)
-                    listOfCorrectPoints.removeAt(0)
+            }
+            isOnTextChanged = !isOnTextChanged
 
+        }
+
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            isOnTextChanged = true
+            if (p0.toString() != "")
+                isOnTextChangedCorrect = false
+            if (checkValidation(p0)) {
+                //currentEditText.error = null
+                isOnTextChangedCorrect = true
+            } else {
+                currentEditText.error = "invalid input"
+                //todo вроде как когда я ввожу неправильное число выкидывает, чтобы номр закинул
+                // currentEditText.isEnabled = false
+                holder.sumPoint.text = ""
+                isOnTextChangedCorrect = false
             }
         }
 
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            if (!p0.isNullOrBlank() || !p0.isNullOrEmpty()) {
-                try {
-                    pointInt = p0.toString().trim().toInt()
-                } catch (e: Exception) {
-                    pointInt = -100
-                    isOnTextChangedCorrect = false
-                }
-                //todo константы здесь определить возможно стоит
-                if (pointInt > MAX_POINT || pointInt < MIN_POINT) {
-                    currentEditText.error = "invalid input"
-                    //  currentEditText.isEnabled = false
-                    Toast.makeText(currentEditText.getContext(),
-                        "Enter only number 0-5",
-                        Toast.LENGTH_SHORT).show();
-                    isOnTextChangedCorrect = false
-                } else {
-                    // currentEditText.error = null
-                    isOnTextChangedCorrect = true
-                }
-            } else {
-
+        private fun checkValidation(p0: CharSequence?): Boolean {
+            var pointInt = -1
+            var checkIsCorrect = true
+            try {
+                pointInt = Integer.parseInt(p0.toString().trim())
+            } catch (e: Exception) {
+                pointInt = -100
             }
-            if (p0.toString() == "" && listOfCorrectPoints.size != 0)
-                listOfCorrectPoints.removeAt(0)
-            if (listOfCorrectPoints.size != 6)
-                holder.sumPoint.text = ""
+            if (pointInt > MAX_POINT || pointInt < MIN_POINT)
+                checkIsCorrect = false
+
+            return checkIsCorrect
         }
     }
 
     companion object {
         const val MAX_POINT = 5
         const val MIN_POINT = 0
+        const val VIEW_TYPE_ITEM = 100
+        const val VIEW_TYPE_TABLE_ENDING = -100
     }
 
 }

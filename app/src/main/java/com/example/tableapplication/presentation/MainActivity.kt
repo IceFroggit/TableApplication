@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupRecyclerView()
-        addTextChangeListeners()
         observeViewModel()
     }
 
@@ -26,15 +25,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.mMemberList.observe(this){
             memberAdapter.memberList = it
         }
-        memberAdapter.errorInput.observe(this){
-            val message = if (it) {
-                "invalid point only 0-5"
-            } else {
-                null
-            }
-            if(message == null)
-                Toast.makeText(applicationContext, "invalid point only 0-5", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setupRecyclerView() {
@@ -42,16 +32,5 @@ class MainActivity : AppCompatActivity() {
         memberAdapter = MemberAdapter()
         tableRecyclerView.layoutManager = LinearLayoutManager(this)
         tableRecyclerView.adapter = memberAdapter
-    }
-    private fun addTextChangeListeners(){
-        memberAdapter.addTextChangedListener = {
-            it.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    viewModel.resetErrorInputPoint()
-                }
-                override fun afterTextChanged(p0: Editable?) {}
-            })
-        }
     }
 }

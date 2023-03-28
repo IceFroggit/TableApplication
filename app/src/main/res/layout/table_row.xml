@@ -39,7 +39,7 @@
                 android:layout_column="1"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center" />
             <EditText
@@ -51,7 +51,7 @@
                 android:layout_column="2"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center"/>
             <EditText
@@ -63,7 +63,7 @@
                 android:layout_column="3"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center" />
             <EditText
@@ -75,7 +75,7 @@
                 android:layout_column="4"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center" />
             <EditText
@@ -87,7 +87,7 @@
                 android:layout_column="5"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center" />
             <EditText
@@ -99,7 +99,7 @@
                 android:layout_column="6"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center" />
             <EditText
@@ -111,7 +111,7 @@
                 android:layout_column="7"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@color/white"
                 android:textAlignment="center" />
             <TextView
