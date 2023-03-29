@@ -17,8 +17,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow>
-            <!--Todo add string constans -->
-
             <TextView
                 style="@style/table_header"
                 android:layout_width="0dp"
@@ -26,7 +24,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="member"
+                android:text="@string/member"
                 android:textAlignment="center" />
 
             <TextView
@@ -38,7 +36,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="@dimen/_5sdp"
-                android:text="№"
+                android:text="@string/Id_symb"
                 android:textAlignment="center" />
 
             <TextView
@@ -50,7 +48,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingEnd="@dimen/_5sdp"
-                android:text="1"
+                android:text="@string/_1"
                 android:textAlignment="center" />
 
             <TextView
@@ -61,7 +59,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="2"
+                android:text="@string/_2"
                 android:textAlignment="center" />
 
             <TextView
@@ -72,7 +70,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="3"
+                android:text="@string/_3"
                 android:textAlignment="center" />
 
             <TextView
@@ -83,7 +81,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="4"
+                android:text="@string/_4"
                 android:textAlignment="center" />
 
             <TextView
@@ -94,7 +92,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="5"
+                android:text="@string/_5"
                 android:textAlignment="center" />
 
             <TextView
@@ -105,7 +103,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="6"
+                android:text="@string/_6"
                 android:textAlignment="center" />
 
             <TextView
@@ -116,7 +114,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="7"
+                android:text="@string/_7"
                 android:textAlignment="center" />
 
             <TextView
@@ -127,7 +125,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Sum"
+                android:text="@string/sum"
                 android:textAlignment="center" />
 
             <TextView
@@ -138,22 +136,22 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Place"
+                android:text="@string/place"
                 android:textAlignment="center" />
         </TableRow>
     </TableLayout>
 
-        <!-- Нужно, чтобы элементы все могли скроллиться
-            clipToPadding="false"
-            android:paddingBottom= -->
+    <!-- Нужно, чтобы элементы все могли скроллиться
+        clipToPadding="false"
+        android:paddingBottom= -->
     <androidx.recyclerview.widget.RecyclerView
-        android:clipToPadding="false"
-        android:paddingBottom="80dp"
         android:id="@+id/table_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_5sdp"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/table_heading_layout">

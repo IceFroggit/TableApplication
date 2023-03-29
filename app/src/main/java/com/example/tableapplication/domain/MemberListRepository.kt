@@ -13,4 +13,6 @@ interface MemberListRepository {
 
     fun editMember(member: Member)
 
+    fun addMemberList(memberList: List<Member>)
+
 }

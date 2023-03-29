@@ -1,26 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--Todo add string constans -->
+    android:layout_height="wrap_content">
+
     <TableLayout
         android:id="@+id/table_heading_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/table_border">
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/member_name"
                 style="@style/table_row_item"
-                android:textSize="@dimen/_9ssp"
                 android:layout_width="0dp"
                 android:layout_column="0"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="Name"/>
+                android:text="@string/name"
+                android:textSize="@dimen/_9ssp" />
+
             <TextView
                 android:id="@+id/member_id"
                 style="@style/table_row_item"
@@ -29,113 +31,121 @@
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="1"
+                android:text="@string/default_id"
                 android:textAlignment="center" />
+
             <EditText
-                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/grade_1"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="1"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center" />
-            <EditText
                 android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <EditText
                 android:id="@+id/grade_2"
-                android:enabled="true"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="2"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center"/>
-            <EditText
-                android:imeOptions="flagNoFullscreen"
-                android:id="@+id/grade_3"
                 android:enabled="true"
+                android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/grade_3"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="3"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center" />
-            <EditText
-                android:imeOptions="flagNoFullscreen"
-                android:id="@+id/grade_4"
                 android:enabled="true"
+                android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/grade_4"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="4"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center" />
-            <EditText
-                android:imeOptions="flagNoFullscreen"
-                android:id="@+id/grade_5"
                 android:enabled="true"
+                android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/grade_5"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="5"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center" />
-            <EditText
-                android:imeOptions="flagNoFullscreen"
-                android:id="@+id/grade_6"
                 android:enabled="true"
+                android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/grade_6"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="6"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center" />
-            <EditText
-                android:imeOptions="flagNoFullscreen"
-                android:id="@+id/grade_7"
                 android:enabled="true"
+                android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/grade_7"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="7"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@color/white"
-                android:textAlignment="center" />
-            <TextView
+                android:enabled="true"
                 android:imeOptions="flagNoFullscreen"
+                android:inputType="numberDecimal"
+                android:textAlignment="center" />
+
+            <TextView
                 android:id="@+id/sum_of_points"
-                android:textColor="@color/white"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="8"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:visibility="visible" />
+
             <TextView
-                android:imeOptions="flagNoFullscreen"
                 android:id="@+id/place"
-                android:textColor="@color/white"
                 style="@style/table_row_item"
                 android:layout_width="0dp"
                 android:layout_column="9"
                 android:layout_margin="1dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/black" />
         </TableRow>
     </TableLayout>
 

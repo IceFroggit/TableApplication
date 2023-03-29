@@ -7,7 +7,7 @@ import com.example.tableapplication.domain.Member.Companion.UNDEFINED_ID
 import com.example.tableapplication.domain.MemberListRepository
 
 object MemberListRepositoryImpl : MemberListRepository {
-    private val memberList = sortedSetOf<Member>({ p0, p1 -> p0.id.compareTo(p1.id) })
+    private var memberList = sortedSetOf<Member>({ p0, p1 -> p0.id.compareTo(p1.id) })
     private val memberListLD = MutableLiveData<List<Member>>()
     private var autoIncrementId = 0
 
@@ -45,8 +45,15 @@ object MemberListRepositoryImpl : MemberListRepository {
 
     override fun editMember(member: Member) {
         val oldElement = getMember(member.id)
-        deleteMember(oldElement)
-        addMember(member)
+        memberList.remove(oldElement)
+        memberList.add(member)
+    }
+
+    override fun addMemberList(newMemberList: List<Member>) {
+       newMemberList.forEach{
+           editMember(it)
+       }
+        updateList()
     }
 
     private fun updateList() {

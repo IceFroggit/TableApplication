@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TableApplication</string>
+    <string name="name">Name</string>
+    <string name="default_id">1</string>
+    <string name="member">member</string>
+    <string name="Id_symb">№</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="sum">Sum</string>
+    <string name="place">Place</string>
 </resources>
