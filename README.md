@@ -4,17 +4,17 @@
 
 
 ## App Screenshots
-1.Ввод cстроки с выводом суммы
+#**1.Ввод cстроки с выводом суммы **
 <div align="center">
 <img src="https://github.com/IceFroggit/TableApplication/blob/release_version/screenshots/sum.jpg">
 </div>
 
-2.Вывод ошибки неправильного ввода
+#**2.Вывод ошибки неправильного ввода**
 <div align="center">
 <img src="https://github.com/IceFroggit/TableApplication/blob/release_version/screenshots/error.jpg">
 </div>
 
-3.Вывод призовых мест после заполнения всех строк 
+#**3.Вывод призовых мест после заполнения всех строк **
 <div align="center">
 <img src="https://github.com/IceFroggit/TableApplication/blob/release_version/screenshots/place.jpg">
 </div>
