@@ -61,7 +61,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
         return memberList.size
     }
 
-
     private fun setListeners(holder: MemberViewHolder, list: ArrayList<ArrayList<Int>>) {
         with(holder) {
             etGradeList[0].addTextChangedListener(
@@ -101,7 +100,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             previousPointCorrect = checkValidation(p0)
         }
-
         override fun afterTextChanged(p0: Editable?) {
             if (isOnTextChanged) {
                 if (isOnTextChangedCorrect) {
@@ -128,7 +126,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
                         listOfCorrectPoints[holder.id].removeAt(0)
                         holder.sumPoint.text = ""
                     }
-
                 }
             }
             isOnTextChanged != isOnTextChanged

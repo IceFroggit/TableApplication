@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.example.tableapplication.data.MemberListRepositoryImpl
 import com.example.tableapplication.domain.Member
 import com.example.tableapplication.domain.UseCases.AddMemberListUseCase
-import com.example.tableapplication.domain.UseCases.EditMemberUseCase
 import com.example.tableapplication.domain.UseCases.GetMemberListUseCase
 import com.example.tableapplication.domain.UseCases.GetMemberUseCase
 
@@ -18,12 +17,21 @@ class MainViewModel : ViewModel() {
 
     val mMemberList = getMemberListUseCase.getMemberList()
 
-    fun editMemberItems(data: List<ArrayList<Int>>) {
+    fun editMemberItems(list: ArrayList<ArrayList<Int>>) {
+        var id = 0
+        var sum = 0
+        list.forEach {
+            sum = 0
+            it.forEach { sum += it }
+            it.add(sum)
+            it.add(id++)
+        }
+        val sortedList = list.sortedWith(compareBy({ -it[7] }))
         var placeInd = 1
         val memberList = mutableListOf<Member>()
-        data.forEach {
-            var sum = it[7]
-            var id = it[8]
+        sortedList.forEach {
+            sum = it[7]
+            id = it[8]
             var place = placeInd++
             it.removeAt(7)
             it.removeAt(7)
@@ -32,17 +40,5 @@ class MainViewModel : ViewModel() {
             memberList.add(item)
         }
         addMemberListUseCase.addMemberList(memberList)
-    }
-
-    //todo refactor in parse fun
-    fun updateList(list: ArrayList<ArrayList<Int>>) {
-        var id = 0
-        list.forEach {
-            var sum = 0
-            it.forEach { sum += it }
-            it.add(sum)
-            it.add(id++)
-        }
-        editMemberItems(list.sortedWith(compareBy({ -it[7] })))
     }
 }

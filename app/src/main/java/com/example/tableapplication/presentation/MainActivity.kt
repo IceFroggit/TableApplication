@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         memberAdapter.editIsFinished.observe(this) {
             if (it) {
                 memberAdapter.isFirstRun = false
-                viewModel.updateList(memberAdapter.listOfCorrectPoints)
+                viewModel.editMemberItems(memberAdapter.listOfCorrectPoints)
 
             }
         }
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         memberAdapter = MemberAdapter()
         tableRecyclerView.layoutManager = LinearLayoutManager(this)
         tableRecyclerView.adapter = memberAdapter
-        tableRecyclerView.recycledViewPool.setMaxRecycledViews(R.layout.table_row, 7)
+        //tableRecyclerView.recycledViewPool.setMaxRecycledViews(R.layout.table_row, 7)
         progressBar = findViewById(R.id.progressBar)
     }
 }

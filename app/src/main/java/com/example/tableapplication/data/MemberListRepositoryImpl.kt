@@ -11,14 +11,12 @@ object MemberListRepositoryImpl : MemberListRepository {
     private val memberListLD = MutableLiveData<List<Member>>()
     private var autoIncrementId = 0
 
-
     init {
         for (i in 1 until 8) {
             val item = Member("Member$i", mutableListOf<Int>())
             addMember(item)
         }
     }
-
 
     override fun addMember(member: Member) {
         if (member.id == UNDEFINED_ID) {
@@ -50,15 +48,13 @@ object MemberListRepositoryImpl : MemberListRepository {
     }
 
     override fun addMemberList(newMemberList: List<Member>) {
-       newMemberList.forEach{
-           editMember(it)
-       }
+        newMemberList.forEach {
+            editMember(it)
+        }
         updateList()
-
     }
 
     private fun updateList() {
         memberListLD.value = memberList.toList()
     }
-
 }
