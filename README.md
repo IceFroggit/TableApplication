@@ -4,24 +4,25 @@
 
 
 ## App Screenshots
-<font size="+2">1.Ввод cтроки с выводом суммы </font>
+<h1> 1.Ввод cтроки с выводом суммы </h1>
 <div align="center">
 <img src="https://github.com/IceFroggit/TableApplication/blob/release_version/screenshots/sum.jpg">
 </div>
 
-<div>
+<h1> &nbsp </h1>
+<h1> &nbsp </h1>
   
 </div>
-<font size="+2">2.Вывод ошибки неправильного ввода </font>
+<h1> 2.Вывод ошибки неправильного ввода </h1>
 <div align="center">
 <img src="https://github.com/IceFroggit/TableApplication/blob/release_version/screenshots/error.jpg">
 </div>
 
-<div>
-  
-</div>
+<h1> &nbsp </h1>
+<h1> &nbsp </h1>
 
-<font size="+2">3.Вывод призовых мест после заполнения всех строк </font>
+
+<h1> 3.Вывод призовых мест после заполнения всех строк </h1>
 
 <div align="center">
 <img src="https://github.com/IceFroggit/TableApplication/blob/release_version/screenshots/place.jpg">
