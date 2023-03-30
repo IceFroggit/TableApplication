@@ -54,6 +54,7 @@ object MemberListRepositoryImpl : MemberListRepository {
            editMember(it)
        }
         updateList()
+
     }
 
     private fun updateList() {

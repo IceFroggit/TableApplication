@@ -1,6 +1,10 @@
 package com.example.tableapplication.presentation
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -8,10 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tableapplication.R
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var memberAdapter: MemberAdapter
     private lateinit var tableRecyclerView: RecyclerView
+    private lateinit var progressBar:ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,17 +28,22 @@ class MainActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.mMemberList.observe(this) {
-            Toast.makeText(this, "Таблица получает данные", Toast.LENGTH_SHORT).show()
             memberAdapter.memberList = it
             if (!tableRecyclerView.isComputingLayout) {
+                tableRecyclerView.visibility = View.INVISIBLE
+                progressBar.setVisibility(View.VISIBLE)
+                Handler().postDelayed({
+                    progressBar.setVisibility(View.INVISIBLE)
+                    tableRecyclerView.visibility = View.VISIBLE
+                },500)
                 memberAdapter.notifyDataSetChanged()
             }
         }
         memberAdapter.editIsFinished.observe(this) {
             if (it) {
-                Toast.makeText(this, "Таблица обновиться должна", Toast.LENGTH_SHORT).show()
                 memberAdapter.dataIsFull[0] =  true
                 viewModel.updateList(memberAdapter.listOfCorrectPoints)
+
             }
         }
     }
@@ -42,5 +53,7 @@ class MainActivity : AppCompatActivity() {
         memberAdapter = MemberAdapter()
         tableRecyclerView.layoutManager = LinearLayoutManager(this)
         tableRecyclerView.adapter = memberAdapter
+        tableRecyclerView.recycledViewPool.setMaxRecycledViews(R.layout.table_row,7)
+        progressBar= findViewById(R.id.progressBar)
     }
 }
