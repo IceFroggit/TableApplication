@@ -2,10 +2,8 @@ package com.example.tableapplication.presentation
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var memberAdapter: MemberAdapter
     private lateinit var tableRecyclerView: RecyclerView
-    private lateinit var progressBar:ProgressBar
+    private lateinit var progressBar: ProgressBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,13 +33,13 @@ class MainActivity : AppCompatActivity() {
                 Handler().postDelayed({
                     progressBar.setVisibility(View.INVISIBLE)
                     tableRecyclerView.visibility = View.VISIBLE
-                },500)
+                }, 500)
                 memberAdapter.notifyDataSetChanged()
             }
         }
         memberAdapter.editIsFinished.observe(this) {
             if (it) {
-                memberAdapter.dataIsFull[0] =  true
+                memberAdapter.isFirstRun = false
                 viewModel.updateList(memberAdapter.listOfCorrectPoints)
 
             }
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         memberAdapter = MemberAdapter()
         tableRecyclerView.layoutManager = LinearLayoutManager(this)
         tableRecyclerView.adapter = memberAdapter
-        tableRecyclerView.recycledViewPool.setMaxRecycledViews(R.layout.table_row,7)
-        progressBar= findViewById(R.id.progressBar)
+        tableRecyclerView.recycledViewPool.setMaxRecycledViews(R.layout.table_row, 7)
+        progressBar = findViewById(R.id.progressBar)
     }
 }

@@ -3,7 +3,6 @@ package com.example.tableapplication.presentation
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,7 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         get() = _editIsFinished
 
     var memberList = listOf<Member>()
-    var dataIsFull = mutableListOf(false)
+    var isFirstRun = true
     val listOfCorrectPoints = ArrayList<ArrayList<Int>>()
 
 
@@ -40,7 +39,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.table_row, parent, false)
         val viewHolder = MemberViewHolder(view)
-        //todo зачем это if (!dataIsFull[0])
         setListeners(viewHolder, listOfCorrectPoints)
         return viewHolder
     }
@@ -50,17 +48,9 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         with(holder) {
             tvName.text = item.name
             tvMemberId.text = item.id.toString()
-            place.text = item.place.toString()
-            sumPoint.text = item.pointSum.toString()
-            Log.d("TAG", sumPoint.text.toString())
-            if (dataIsFull[0]) {
-                etGrade1.isEnabled = true
-                etGrade2.isEnabled = true
-                etGrade3.isEnabled = true
-                etGrade4.isEnabled = true
-                etGrade5.isEnabled = true
-                etGrade6.isEnabled = true
-                etGrade7.isEnabled = true
+            if (!isFirstRun) {
+                place.text = item.place.toString()
+                sumPoint.text = item.pointSum.toString()
                 etGrade1.setText(item.pointList[0].toString())
                 etGrade2.setText(item.pointList[1].toString())
                 etGrade3.setText(item.pointList[2].toString())
@@ -68,6 +58,13 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
                 etGrade5.setText(item.pointList[4].toString())
                 etGrade6.setText(item.pointList[5].toString())
                 etGrade7.setText(item.pointList[6].toString())
+                etGrade1.isEnabled = true
+                etGrade2.isEnabled = true
+                etGrade3.isEnabled = true
+                etGrade4.isEnabled = true
+                etGrade5.isEnabled = true
+                etGrade6.isEnabled = true
+                etGrade7.isEnabled = true
             }
             when (position) {
                 0 -> etGrade1.isEnabled = false
@@ -103,27 +100,29 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     }
 
     private fun setListeners(holder: MemberViewHolder, list: ArrayList<ArrayList<Int>>) {
-        holder.etGrade1.addTextChangedListener(PointTextWatcher(holder.etGrade1,
-            list, holder, _editIsFinished))
-        holder.etGrade2.addTextChangedListener(PointTextWatcher(holder.etGrade2,
-            list,
-            holder, _editIsFinished))
-        holder.etGrade3.addTextChangedListener(PointTextWatcher(holder.etGrade3,
-            list,
-            holder, _editIsFinished))
-        holder.etGrade4.addTextChangedListener(PointTextWatcher(holder.etGrade4,
-            list,
-            holder, _editIsFinished))
-        holder.etGrade5.addTextChangedListener(PointTextWatcher(holder.etGrade5,
-            list,
-            holder, _editIsFinished))
-        holder.etGrade6.addTextChangedListener(PointTextWatcher(holder.etGrade6,
-            list,
-            holder, _editIsFinished))
-        holder.etGrade7.addTextChangedListener(PointTextWatcher(holder.etGrade7,
-            list,
-            holder, _editIsFinished))
-
+        with(holder) {
+            etGrade1.addTextChangedListener(
+                PointTextWatcher(etGrade1, list, holder, _editIsFinished)
+            )
+            etGrade2.addTextChangedListener(
+                PointTextWatcher(etGrade2, list, holder, _editIsFinished)
+            )
+            etGrade3.addTextChangedListener(
+                PointTextWatcher(etGrade3, list, holder, _editIsFinished)
+            )
+            etGrade4.addTextChangedListener(
+                PointTextWatcher(etGrade4, list, holder, _editIsFinished)
+            )
+            etGrade5.addTextChangedListener(
+                PointTextWatcher(etGrade5, list, holder, _editIsFinished)
+            )
+            etGrade6.addTextChangedListener(
+                PointTextWatcher(etGrade6, list, holder, _editIsFinished)
+            )
+            etGrade7.addTextChangedListener(
+                PointTextWatcher(etGrade7, list, holder, _editIsFinished)
+            )
+        }
     }
 
     class PointTextWatcher(
@@ -143,10 +142,10 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         override fun afterTextChanged(p0: Editable?) {
             if (isOnTextChanged) {
                 if (isOnTextChangedCorrect) {
-                    if (!previousPointCorrect && listOfCorrectPoints[holder.id].size != MAX_POINT_LIST_SIZE + 1)
-                        listOfCorrectPoints[holder.id].add(p0.toString().toInt())
+                    if (!previousPointCorrect && listOfCorrectPoints[holder.id].size != MAX_POINT_LIST_SIZE) listOfCorrectPoints[holder.id].add(
+                        p0.toString().toInt())
 
-                    if (listOfCorrectPoints[holder.id].size == MAX_POINT_LIST_SIZE + 1) {
+                    if (listOfCorrectPoints[holder.id].size == MAX_POINT_LIST_SIZE) {
                         var sum = parsePointSum(holder)
                         holder.sumPoint.text = sum.toString()
                     } else {
@@ -154,15 +153,13 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
                     }
                     var flag = false
                     for (it in listOfCorrectPoints) {
-                        if (it.size == 7)
-                            flag = true
+                        if (it.size == 7) flag = true
                         else {
                             flag = false
                             break
                         }
                     }
-                    if (flag)
-                        _editIsFinished.value = flag
+                    if (flag) _editIsFinished.value = flag
                 } else {
                     if (previousPointCorrect && listOfCorrectPoints[holder.id].size - 1 != 0)
                         listOfCorrectPoints[holder.id].removeAt(0)
@@ -189,36 +186,27 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
             } catch (e: Exception) {
                 INCORRECT_POINT
             }
-            if (pointInt > MAX_POINT || pointInt < MIN_POINT)
-                checkIsCorrect = false
-
+            if (pointInt > MAX_POINT || pointInt < MIN_POINT) checkIsCorrect = false
             return checkIsCorrect
         }
 
         private fun parsePointSum(holder: MemberViewHolder): Int {
             with(holder) {
-                val gr1 =
-                    if (holder.etGrade1.text.toString() != "") holder.etGrade1.text.toString()
-                        .toInt() else 0
-                val gr2 =
-                    if (holder.etGrade2.text.toString() != "") holder.etGrade2.text.toString()
-                        .toInt() else 0
-                val gr3 =
-                    if (holder.etGrade3.text.toString() != "") holder.etGrade3.text.toString()
-                        .toInt() else 0
-                val gr4 =
-                    if (holder.etGrade4.text.toString() != "") holder.etGrade4.text.toString()
-                        .toInt() else 0
-                val gr5 =
-                    if (holder.etGrade5.text.toString() != "") holder.etGrade5.text.toString()
-                        .toInt() else 0
-                val gr6 =
-                    if (holder.etGrade6.text.toString() != "") holder.etGrade6.text.toString()
-                        .toInt() else 0
-                val gr7 =
-                    if (holder.etGrade7.text.toString() != "") holder.etGrade7.text.toString()
-                        .toInt() else 0
-                listOfCorrectPoints[holder.id] = arrayListOf(gr1, gr2, gr3, gr4, gr5, gr6, gr7)
+                val gr1 = if (etGrade1.text.toString() != "")
+                    etGrade1.text.toString().toInt() else 0
+                val gr2 = if (etGrade2.text.toString() != "")
+                    etGrade2.text.toString().toInt() else 0
+                val gr3 = if (etGrade3.text.toString() != "")
+                    etGrade3.text.toString().toInt() else 0
+                val gr4 = if (etGrade4.text.toString() != "")
+                    etGrade4.text.toString().toInt() else 0
+                val gr5 = if (etGrade5.text.toString() != "")
+                    etGrade5.text.toString().toInt() else 0
+                val gr6 = if (etGrade6.text.toString() != "")
+                    etGrade6.text.toString().toInt() else 0
+                val gr7 = if (etGrade7.text.toString() != "")
+                    etGrade7.text.toString().toInt() else 0
+                listOfCorrectPoints[id] = arrayListOf(gr1, gr2, gr3, gr4, gr5, gr6, gr7)
 
                 return gr1 + gr2 + gr3 + gr4 + gr5 + gr6 + gr7
             }
@@ -229,6 +217,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         const val MAX_POINT = 5
         const val MIN_POINT = 0
         const val INCORRECT_POINT = -100
-        const val MAX_POINT_LIST_SIZE = 6
+        const val MAX_POINT_LIST_SIZE = 7
     }
 }
