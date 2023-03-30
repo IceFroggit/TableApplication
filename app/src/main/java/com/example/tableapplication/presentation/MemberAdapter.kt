@@ -45,32 +45,14 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
         with(holder) {
             tvName.text = item.name
             tvMemberId.text = item.id.toString()
-            if (!isFirstRun) {
+            if(!isFirstRun){
                 place.text = item.place.toString()
                 sumPoint.text = item.pointSum.toString()
-                etGrade1.setText(item.pointList[0].toString())
-                etGrade2.setText(item.pointList[1].toString())
-                etGrade3.setText(item.pointList[2].toString())
-                etGrade4.setText(item.pointList[3].toString())
-                etGrade5.setText(item.pointList[4].toString())
-                etGrade6.setText(item.pointList[5].toString())
-                etGrade7.setText(item.pointList[6].toString())
-                etGrade1.isEnabled = true
-                etGrade2.isEnabled = true
-                etGrade3.isEnabled = true
-                etGrade4.isEnabled = true
-                etGrade5.isEnabled = true
-                etGrade6.isEnabled = true
-                etGrade7.isEnabled = true
             }
-            when (position) {
-                0 -> etGrade1.isEnabled = false
-                1 -> etGrade2.isEnabled = false
-                2 -> etGrade3.isEnabled = false
-                3 -> etGrade4.isEnabled = false
-                4 -> etGrade5.isEnabled = false
-                5 -> etGrade6.isEnabled = false
-                6 -> etGrade7.isEnabled = false
+            for (i in 0 until etGradeList.size) {
+                etGradeList[i].isEnabled = (i != position)
+                if (!isFirstRun)
+                    etGradeList[i].setText(item.pointList[i].toString())
             }
         }
     }
@@ -82,26 +64,26 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
 
     private fun setListeners(holder: MemberViewHolder, list: ArrayList<ArrayList<Int>>) {
         with(holder) {
-            etGrade1.addTextChangedListener(
-                PointTextWatcher(etGrade1, list, holder, _editIsFinished)
+            etGradeList[0].addTextChangedListener(
+                PointTextWatcher(etGradeList[0], list, holder, _editIsFinished)
             )
-            etGrade2.addTextChangedListener(
-                PointTextWatcher(etGrade2, list, holder, _editIsFinished)
+            etGradeList[1].addTextChangedListener(
+                PointTextWatcher(etGradeList[1], list, holder, _editIsFinished)
             )
-            etGrade3.addTextChangedListener(
-                PointTextWatcher(etGrade3, list, holder, _editIsFinished)
+            etGradeList[2].addTextChangedListener(
+                PointTextWatcher(etGradeList[2], list, holder, _editIsFinished)
             )
-            etGrade4.addTextChangedListener(
-                PointTextWatcher(etGrade4, list, holder, _editIsFinished)
+            etGradeList[3].addTextChangedListener(
+                PointTextWatcher(etGradeList[3], list, holder, _editIsFinished)
             )
-            etGrade5.addTextChangedListener(
-                PointTextWatcher(etGrade5, list, holder, _editIsFinished)
+            etGradeList[4].addTextChangedListener(
+                PointTextWatcher(etGradeList[4], list, holder, _editIsFinished)
             )
-            etGrade6.addTextChangedListener(
-                PointTextWatcher(etGrade6, list, holder, _editIsFinished)
+            etGradeList[5].addTextChangedListener(
+                PointTextWatcher(etGradeList[5], list, holder, _editIsFinished)
             )
-            etGrade7.addTextChangedListener(
-                PointTextWatcher(etGrade7, list, holder, _editIsFinished)
+            etGradeList[6].addTextChangedListener(
+                PointTextWatcher(etGradeList[6], list, holder, _editIsFinished)
             )
         }
     }
@@ -142,8 +124,11 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
                     }
                     if (flag) _editIsFinished.value = flag
                 } else {
-                    if (previousPointCorrect && listOfCorrectPoints[holder.id].size - 1 != 0)
+                    if (previousPointCorrect && listOfCorrectPoints[holder.id].size - 1 != 0) {
                         listOfCorrectPoints[holder.id].removeAt(0)
+                        holder.sumPoint.text = ""
+                    }
+
                 }
             }
             isOnTextChanged != isOnTextChanged
@@ -174,23 +159,18 @@ class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
 
         private fun parsePointSum(holder: MemberViewHolder): Int {
             with(holder) {
-                val gr1 = if (etGrade1.text.toString() != "")
-                    etGrade1.text.toString().toInt() else 0
-                val gr2 = if (etGrade2.text.toString() != "")
-                    etGrade2.text.toString().toInt() else 0
-                val gr3 = if (etGrade3.text.toString() != "")
-                    etGrade3.text.toString().toInt() else 0
-                val gr4 = if (etGrade4.text.toString() != "")
-                    etGrade4.text.toString().toInt() else 0
-                val gr5 = if (etGrade5.text.toString() != "")
-                    etGrade5.text.toString().toInt() else 0
-                val gr6 = if (etGrade6.text.toString() != "")
-                    etGrade6.text.toString().toInt() else 0
-                val gr7 = if (etGrade7.text.toString() != "")
-                    etGrade7.text.toString().toInt() else 0
-                listOfCorrectPoints[id] = arrayListOf(gr1, gr2, gr3, gr4, gr5, gr6, gr7)
-
-                return gr1 + gr2 + gr3 + gr4 + gr5 + gr6 + gr7
+                val list = ArrayList<Int>()
+                var sum = 0
+                etGradeList.forEach {
+                    val point =
+                        if (it.text.toString() != "")
+                            it.text.toString().toInt()
+                        else 0
+                    sum += point
+                    list.add(point)
+                }
+                listOfCorrectPoints[id] = list
+                return sum
             }
         }
     }
