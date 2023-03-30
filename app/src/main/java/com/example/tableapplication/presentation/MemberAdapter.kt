@@ -4,10 +4,8 @@ package com.example.tableapplication.presentation
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +13,7 @@ import com.example.tableapplication.R
 import com.example.tableapplication.domain.Member
 
 
-class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
+class MemberAdapter : RecyclerView.Adapter<MemberViewHolder>() {
 
     private var _editIsFinished = MutableLiveData<Boolean>()
     val editIsFinished: LiveData<Boolean>
@@ -24,7 +22,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
     var memberList = listOf<Member>()
     var isFirstRun = true
     val listOfCorrectPoints = ArrayList<ArrayList<Int>>()
-
 
     init {
         listOfCorrectPoints.add(0, arrayListOf(0))
@@ -82,22 +79,6 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         return memberList.size
     }
 
-    class MemberViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-
-        val tvName: TextView = view.findViewById(R.id.member_name)
-        val tvMemberId: TextView = view.findViewById(R.id.member_id)
-        val etGrade1: EditText = view.findViewById(R.id.grade_1)
-        val etGrade2: EditText = view.findViewById(R.id.grade_2)
-        val etGrade3: EditText = view.findViewById(R.id.grade_3)
-        val etGrade4: EditText = view.findViewById(R.id.grade_4)
-        val etGrade5: EditText = view.findViewById(R.id.grade_5)
-        val etGrade6: EditText = view.findViewById(R.id.grade_6)
-        val etGrade7: EditText = view.findViewById(R.id.grade_7)
-        val sumPoint: TextView = view.findViewById(R.id.sum_of_points)
-        val place: TextView = view.findViewById(R.id.place)
-        val id: Int
-            get() = tvMemberId.text.toString().toInt()
-    }
 
     private fun setListeners(holder: MemberViewHolder, list: ArrayList<ArrayList<Int>>) {
         with(holder) {
@@ -142,8 +123,8 @@ class MemberAdapter : RecyclerView.Adapter<MemberAdapter.MemberViewHolder>() {
         override fun afterTextChanged(p0: Editable?) {
             if (isOnTextChanged) {
                 if (isOnTextChangedCorrect) {
-                    if (!previousPointCorrect && listOfCorrectPoints[holder.id].size != MAX_POINT_LIST_SIZE) listOfCorrectPoints[holder.id].add(
-                        p0.toString().toInt())
+                    if (!previousPointCorrect && listOfCorrectPoints[holder.id].size != MAX_POINT_LIST_SIZE)
+                        listOfCorrectPoints[holder.id].add(p0.toString().toInt())
 
                     if (listOfCorrectPoints[holder.id].size == MAX_POINT_LIST_SIZE) {
                         var sum = parsePointSum(holder)
